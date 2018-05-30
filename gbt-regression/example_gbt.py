@@ -17,11 +17,7 @@ Trains a single-machine scikit-learn GBT model on the provided data file, produc
 Uses MLflow tracking APIs to log the input parameters, the model file, and the model's training loss.
 This script uses the diamonds dataset as an example. 
 
-An example local call: 
-python gbt-regression/example_gbt.py 100 10 .2 .3 rmse price "carat,cut,color,clarity,depth,table,x,y,z" 
-
-An example mlflow call: 
-mlflow run gbt-regression -e example -P n-trees=100 -P m-depth=10 -P learning-rate=.2 -P test-percent=.3 -P loss="rmse" -P label-col="price" -P feat-cols="carat","cut","color","clarity","depth","table","x","y","z"
+See README.md for instructions on how to run.
 
 """
 
@@ -55,7 +51,6 @@ for i in args.feat_cols:
 	print("feat-cols      " + i)
 
 # Conversion of CSV to Parquet. Only needed for testing the diamonds dataset.
-# See http://blogs.quovantis.com/how-to-convert-csv-to-parquet-files/
 
 # Creating a temporary directory for the storage of the csv and parquet file. Will be deleted at the end of the script.
 temp_folder_path = mkdtemp()

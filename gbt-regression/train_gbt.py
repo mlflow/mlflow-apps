@@ -12,13 +12,11 @@ from sklearn.metrics import *
 
 from time import time
 
-
 def train(args, pandasData):
 
 	# Split data into a labels dataframe and a features dataframe
 	labels = pandasData[args.label_col].values
-	featureNames = args.feat_cols
-	features = pandasData[featureNames].values
+	features = pandasData[args.feat_cols].values
 
 	# Hold out test_percent of the data for testing.  We will use the rest for training.
 	trainingFeatures, testFeatures, trainingLabels, testLabels = train_test_split(features, labels, test_size=args.test_percent)
