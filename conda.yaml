@@ -1,4 +1,4 @@
-name: mlflow-project
+name: mlflow-mlflow-examples
 channels:
   - defaults
 dependencies:
@@ -60,11 +60,16 @@ dependencies:
   - zlib=1.2.11=hf3cbc9b_2
   - pip:
     - alabaster==0.7.10
+    - argh==0.26.2
     - astroid==1.6.4
     - babel==2.5.3
+    - boto3==1.7.29
+    - botocore==1.10.29
     - chardet==3.0.4
     - codecov==2.0.15
+    - configparser==3.5.0
     - coverage==4.5.1
+    - databricks-cli==0.7.1
     - docutils==0.14
     - dodgy==0.1.9
     - flake8==3.5.0
@@ -73,16 +78,20 @@ dependencies:
     - idna==2.6
     - imagesize==1.0.0
     - isort==4.3.4
+    - jmespath==0.9.3
     - lazy-object-proxy==1.3.1
+    - livereload==2.5.2
     - mccabe==0.6.1
     - mock==2.0.0
     - nose==1.3.7
     - npm==0.1.1
     - optional-django==0.1.0
     - packaging==17.1
+    - pathtools==0.1.2
     - pbr==4.0.3
     - pep8-naming==0.7.0
     - pluggy==0.6.0
+    - port-for==0.3.1
     - prospector==0.12.7
     - protobuf==3.5.2.post1
     - py==1.5.3
@@ -105,9 +114,11 @@ dependencies:
     - pytest==3.2.1
     - pytest-cov==2.5.1
     - pyyaml==3.12
+    - querystring-parser==1.2.3
     - requests==2.18.4
     - requirements-detector==0.5.2
     - rstcheck==3.2
+    - s3transfer==0.1.13
     - scikit-learn==0.19.1
     - scipy==1.1.0
     - setoptconf==0.2.0
@@ -115,12 +126,17 @@ dependencies:
     - smmap==0.9.0
     - snowballstemmer==1.2.1
     - sphinx==1.7.4
+    - sphinx-autobuild==0.7.1
     - sphinx-rtd-theme==0.3.1
     - sphinxcontrib-websupport==1.0.1
+    - tabulate==0.8.2
+    - tornado==5.0.2
     - tox==2.9.1
     - urllib3==1.22
     - virtualenv==16.0.0
+    - watchdog==0.8.3
     - wrapt==1.10.11
     - xgboost==0.71
     - zipstream==1.1.4
-prefix: /Users/juntaizheng/miniconda3/envs/mlflow-project
+prefix: /Users/juntaizheng/miniconda3/envs/mlflow-mlflow-examples
+

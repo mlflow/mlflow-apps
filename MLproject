@@ -22,3 +22,27 @@ entry_points:
       label-col: str
       feat-cols: str
     command: "python gbt-regression/example_gbt.py {n-trees} {m-depth} {learning-rate} {test-percent} {loss} {label-col} {feat-cols}"
+  linear-regression-main:
+    parameters:
+      data-path: str
+      alpha: {type: float, default: .001}
+      l1-ratio: {type: float, default: .5}
+      test-percent: {type: float, default: .3}
+      label-col: str
+    command: "python linear-regression/main_linear.py {data-path} {alpha} {l1-ratio} {test-percent} {label-col}"
+  linear-regression-example:
+    parameters:
+      alpha: {type: float, default: .001}
+      l1-ratio: {type: float, default: .5}
+      test-percent: {type: float, default: .3}
+      label-col: str
+    command: "python linear-regression/example_linear.py {alpha} {l1-ratio} {test-percent} {label-col}"
+  dnn-regression-main:
+    parameters:
+      training-data-path: str
+      test-data-path: str
+      hidden-units: str
+      steps: {type: int, default: 100}
+      batch-size: {type: int, default: 128}
+      label-col: str
+    command: "python dnn-regression/main_dnn.py {training-data-path} {test-data-path} {hidden-units} {steps} {batch-size} {label-col}"
