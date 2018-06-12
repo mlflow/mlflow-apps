@@ -22,3 +22,11 @@ entry_points:
       label-col: str
       feat-cols: str
     command: "python gbt-regression/example_gbt.py {n-trees} {m-depth} {learning-rate} {test-percent} {loss} {label-col} {feat-cols}"
+  linear-regression-main:
+    parameters:
+      training-data-path: path
+      test-data-path: path
+      alpha: {type: float, default: .001}
+      l1-ratio: {type: float, default: .5}
+      label-col: str
+    command: "python linear-regression/main_linear.py {training-data-path} {test-data-path} {alpha} {l1-ratio} {label-col}"
