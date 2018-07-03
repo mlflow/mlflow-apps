@@ -9,22 +9,16 @@ import utils
 
 #Parsing arguments.
 parser = argparse.ArgumentParser()
-parser.add_argument("model_dir", help="Directory to save the model in.",
-                    type=str)
-parser.add_argument("training_data_path", help="Path to training parquet dataset file.",
-                    type=str)
-parser.add_argument("test_data_path", help="Path to test parquet dataset file.",
-                    type=str)
+parser.add_argument("model_dir", help="Directory to save the model in.", type=str)
+parser.add_argument("training_data_path", help="Path to training parquet dataset file.", type=str)
+parser.add_argument("test_data_path", help="Path to test parquet dataset file.", type=str)
 parser.add_argument("hidden_units", help="Hidden layer dimensions for the model.",
                     type=lambda s: [str(i) for i in s.split(',')])
-parser.add_argument("steps", help="Number of steps for the training of the model to take.",
-                    type=int)
-parser.add_argument("batch_size", help="Size of batches for model.",
-                    type=int)
-parser.add_argument("label_col", help="Name of label column.",
-                    type=str)
+parser.add_argument("steps", help="Number of steps for training the model will take.", type=int)
+parser.add_argument("batch_size", help="Size of batches for model.", type=int)
+parser.add_argument("label_col", help="Name of label column.", type=str)
 parser.add_argument("--feat-cols", help="List of feature column names. "
-                        "Input must be a single string with columns delimited by commas.",
+                    "Input must be a single string with columns delimited by commas.",
                     type=lambda s: [str(i) for i in s.split(',')])
 
 args = parser.parse_args()
@@ -43,6 +37,6 @@ for hu in args.hidden_units:
     hidden_units.append(int(hu))
 
 # Train the model based on the parameters provided.
-train_dnn.train(args.model_dir, training_pandasData, test_pandasData, args.label_col, feat_cols, 
-                    hidden_units, args.steps, args.batch_size, 
-                    args.training_data_path, args.test_data_path)
+train_dnn.train(args.model_dir, training_pandasData, test_pandasData, args.label_col, 
+                feat_cols, hidden_units, args.steps, args.batch_size, 
+                args.training_data_path, args.test_data_path)

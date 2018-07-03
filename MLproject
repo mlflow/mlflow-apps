@@ -3,25 +3,14 @@ conda_env: conda.yaml
 entry_points:
   gbt-regression-main:
     parameters:
-      data-path: str
+      training-data-path: path
+      test-data-path: path
       n-trees: {type: int, default: 100}
       m-depth: {type: int, default: 3}
       learning-rate: {type: float, default: .1}
-      test-percent: {type: float, default: .3}
       loss: {type: str, default: "rmse"}
       label-col: str
-      feat-cols: str
-    command: "python gbt-regression/main_gbt.py {data-path} {n-trees} {m-depth} {learning-rate} {test-percent} {loss} {label-col} {feat-cols}"
-  gbt-regression-example:
-    parameters:
-      n-trees: {type: int, default: 100}
-      m-depth: {type: int, default: 3}
-      learning-rate: {type: float, default: .1}
-      test-percent: {type: float, default: .3}
-      loss: {type: str, default: "rmse"}
-      label-col: str
-      feat-cols: str
-    command: "python gbt-regression/example_gbt.py {n-trees} {m-depth} {learning-rate} {test-percent} {loss} {label-col} {feat-cols}"
+    command: "python examples/gbt-regression/main_gbt.py {training-data-path} {test-data-path} {n-trees} {m-depth} {learning-rate} {loss} {label-col}"
   linear-regression-main:
     parameters:
       training-data-path: path
@@ -29,7 +18,7 @@ entry_points:
       alpha: {type: float, default: .001}
       l1-ratio: {type: float, default: .5}
       label-col: str
-    command: "python linear-regression/main_linear.py {training-data-path} {test-data-path} {alpha} {l1-ratio} {label-col}"
+    command: "python examples/linear-regression/main_linear.py {training-data-path} {test-data-path} {alpha} {l1-ratio} {label-col}"
   dnn-regression-main:
     parameters:
       model-dir: path
@@ -39,8 +28,8 @@ entry_points:
       steps: {type: int, default: 100}
       batch-size: {type: int, default: 128}
       label-col: str
-    command: "python dnn-regression/main_dnn.py {model-dir} {training-data-path} {test-data-path} {hidden-units} {steps} {batch-size} {label-col}"
+    command: "python examples/dnn-regression/main_dnn.py {model-dir} {training-data-path} {test-data-path} {hidden-units} {steps} {batch-size} {label-col}"
   download-example-data:
     parameters:
       dest-dir: path
-    command: "python dnn-regression/utils.py {dest-dir}"
+    command: "python utils.py {dest-dir}"
