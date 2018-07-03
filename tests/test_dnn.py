@@ -18,9 +18,9 @@ def test_dnn():
             os.mkdir(artifacts)
             tracking.set_tracking_uri(artifacts)
             # Download the diamonds dataset via mlflow run
-            run(".", entry_point="download-example-data", version=None, parameters={"dest-dir":diamonds}, 
-            experiment_id=tracking._get_experiment_id(), mode="local", 
-            cluster_spec=None, git_username=None, git_password=None, use_conda=True,
+            run(".", entry_point="download-example-data", version=None, 
+            parameters={"dest-dir":diamonds}, experiment_id=tracking._get_experiment_id(), 
+            mode="local", cluster_spec=None, git_username=None, git_password=None, use_conda=True,
             use_temp_cwd=False, storage_dir=None)
 
             # Run the main dnn app via mlflow
