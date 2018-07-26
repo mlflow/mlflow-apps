@@ -1,0 +1,13 @@
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      training-data-path: path
+      test-data-path: path
+      n-trees: {type: int, default: 100}
+      m-depth: {type: int, default: 3}
+      learning-rate: {type: float, default: .1}
+      loss: {type: str, default: "rmse"}
+      label-col: str
+    command: "python main_gbt.py {training-data-path} {test-data-path} {n-trees} {m-depth} {learning-rate} {loss} {label-col}"

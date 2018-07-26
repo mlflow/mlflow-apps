@@ -25,8 +25,8 @@ def test_gbt():
             initial = os.path.join(artifacts, "0")
             dir_list = os.listdir(initial)
 
-            # Run the main dnn app via mlflow
-            run(".", entry_point="gbt-regression-main", version=None, 
+            # Run the main gbt app via mlflow
+            run("examples/gbt-regression", entry_point="main", version=None, 
             parameters={"training-data-path": os.path.join(diamonds, "train_diamonds.parquet"),
                         "test-data-path": os.path.join(diamonds, "test_diamonds.parquet"), 
                         "n-trees": 10,

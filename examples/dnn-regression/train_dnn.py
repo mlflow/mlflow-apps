@@ -1,4 +1,5 @@
-from mlflow import log_metric, log_param, tensorflow
+import mlflow
+from mlflow import tensorflow
 import tensorflow as tf
 
 
@@ -56,10 +57,10 @@ def train(model_dir, training_pandas_data, test_pandas_data, label_col, feat_col
 
     print("Test RMSE:", test_rmse)
 
-    log_param("Number of data points", len(training_pandas_data[label_col].values))
+    mlflow.log_param("Number of data points", len(training_pandas_data[label_col].values))
 
     #Logging the RMSE and predictions.
-    log_metric("RMSE for test set", test_rmse)
+    mlflow.log_metric("RMSE for test set", test_rmse)
 
     # Saving TensorFlow model.
     saved_estimator_path = regressor.export_savedmodel(model_dir, 
@@ -69,3 +70,6 @@ def train(model_dir, training_pandas_data, test_pandas_data, label_col, feat_col
     tensorflow.log_saved_model(saved_model_dir=saved_estimator_path,
                                signature_def_key="predict", 
                                artifact_path="model")
+
+    run_id = mlflow.tracking.active_run().info.run_uuid
+    print("Run with id %s finished" % run_id)

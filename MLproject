@@ -1,34 +1,6 @@
 conda_env: conda.yaml
 
 entry_points:
-  gbt-regression-main:
-    parameters:
-      training-data-path: path
-      test-data-path: path
-      n-trees: {type: int, default: 100}
-      m-depth: {type: int, default: 3}
-      learning-rate: {type: float, default: .1}
-      loss: {type: str, default: "rmse"}
-      label-col: str
-    command: "python examples/gbt-regression/main_gbt.py {training-data-path} {test-data-path} {n-trees} {m-depth} {learning-rate} {loss} {label-col}"
-  linear-regression-main:
-    parameters:
-      training-data-path: path
-      test-data-path: path
-      alpha: {type: float, default: .001}
-      l1-ratio: {type: float, default: .5}
-      label-col: str
-    command: "python examples/linear-regression/main_linear.py {training-data-path} {test-data-path} {alpha} {l1-ratio} {label-col}"
-  dnn-regression-main:
-    parameters:
-      model-dir: path
-      training-data-path: path
-      test-data-path: path
-      hidden-units: str
-      steps: {type: int, default: 100}
-      batch-size: {type: int, default: 128}
-      label-col: str
-    command: "python examples/dnn-regression/main_dnn.py {model-dir} {training-data-path} {test-data-path} {hidden-units} {steps} {batch-size} {label-col}"
   download-example-data:
     parameters:
       dest-dir: path

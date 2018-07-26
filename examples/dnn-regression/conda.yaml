@@ -1,0 +1,9 @@
+name: main
+channels:
+  - defaults
+dependencies:
+  - pandas=0.22.0
+  - pip:
+    - mlflow
+    - pyarrow
+    - tensorflow==1.8.0

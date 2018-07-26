@@ -1,0 +1,11 @@
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      training-data-path: path
+      test-data-path: path
+      alpha: {type: float, default: .001}
+      l1-ratio: {type: float, default: .5}
+      label-col: str
+    command: "python main_linear.py {training-data-path} {test-data-path} {alpha} {l1-ratio} {label-col}"

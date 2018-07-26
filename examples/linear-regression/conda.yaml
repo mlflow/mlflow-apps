@@ -1,0 +1,10 @@
+name: main
+channels:
+  - defaults
+dependencies:
+  - numpy
+  - pandas=0.22.0
+  - scikit-learn==0.19.1
+  - pip:
+    - mlflow
+    - pyarrow

@@ -1,5 +1,6 @@
 import xgboost as xgb
-from mlflow import log_metric, sklearn
+import mlflow
+from mlflow import sklearn
 
 
 def train(training_pandasData, test_pandasData, label_col, feat_cols, n_trees, m_depth, 
@@ -37,8 +38,11 @@ def train(training_pandasData, test_pandasData, label_col, feat_cols, n_trees, m
     print("Test set score:", r2_score_test)
 
     # Logging the r2 score for both sets.
-    log_metric("R2 score for training set", r2_score_training)
-    log_metric("R2 score for test set", r2_score_test)
+    mlflow.log_metric("R2 score for training set", r2_score_training)
+    mlflow.log_metric("R2 score for test set", r2_score_test)
 
     # Saving the model as an artifact.
     sklearn.log_model(xgbr, "model")
+
+    run_id = mlflow.tracking.active_run().info.run_uuid
+    print("Run with id %s finished" % run_id)

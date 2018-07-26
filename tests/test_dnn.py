@@ -24,7 +24,7 @@ def test_dnn():
             use_temp_cwd=False, storage_dir=None)
 
             # Run the main dnn app via mlflow
-            run(".", entry_point="dnn-regression-main", version=None, 
+            run("examples/dnn-regression", entry_point="main", version=None, 
             parameters={"model-dir": estimator,
                         "training-data-path": os.path.join(diamonds, "train_diamonds.parquet"),
                         "test-data-path": os.path.join(diamonds, "test_diamonds.parquet"), 

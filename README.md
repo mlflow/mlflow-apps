@@ -1,87 +1,66 @@
-# mlflow-examples
-## [MLflow](http://mlflow.org) App Library
-### gbt-regression
-This app creates and fits an [XGBoost Gradient Boosted Tree](https://xgboost.readthedocs.io/en/latest/python/python_api.html#module-xgboost.sklearn) model based on parquet-formatted input data. The arguments to the program are as follows:
-* `training-data-path`: (str, required) local path or URI of a parquet file containing training data
-* `test-data-path`: (str, required) local path or URI of a parquet file containing test data
-* `n-trees`: (int) number of trees for the regressor; default `100`
-* `m-depth`: (int) maximum depth of trees of regressor; default `10`
-* `learning-rate`: (float) learning rate of the model; ranges from `0.0` to `1.0`; default `.2`
-* `loss`: (str) name of [loss function](https://github.com/dmlc/xgboost/blob/master/doc/parameter.md) to be used; default `"rmse"`
-* `label-col`: (str, required) name of label column in dataset; `string` input
-* `feat-cols`: (str) names of columns in dataset to be used as features; input is one `string` with names delimited by commas
-	* This argument is optional. If no argument is provided, it is assumed that all columns but the label column are feature columns.
+# [MLflow](http://mlflow.org) App Library
 
-This app currently assumes that the input data is all numerical.
+Collection of pluggable MLflow apps (MLflow projects). You can call the apps in this repository to:
+* Seamlessly embed ML functionality into your own applications
+* Reproducibly train models from a variety of frameworks on big & small data, without worrying about installing dependencies
 
-To run the app with default parameters while in the root directory, run the command 
+## Getting Started
+### Running Apps via the CLI
+Let's start by running the gbt-regression app, which trains an XGBoost Gradient Boosted Tree model.
+
+First, download example training & test parquet files by running:
+ 
 ```
-mlflow run . -e gbt-regression-main -P data-path="insert/data/path/" -P label-col="insert.label.col" 
+temp="$(mktemp -d)"
+mlflow run git@github.com:databricks/mlflow-apps.git -e download-example-data -P dest-dir=$temp
 ```
 
-### linear-regression
+This will download the diamonds [diamonds](https://raw.githubusercontent.com/tidyverse/ggplot2/4c678917/data-raw/diamonds.csv) dataset to the directory `temp-data`.
 
-This app creates and fits an [Elastic Net](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html) model based on parquet-formatted input data. The arguments to the program are as follows:
-* `training-data-path`: (str, required) local path or URI of a parquet file containing training data
-* `test-data-path`: (str, required) local path or URI of a parquet file containing test data
-* `alpha`: (float) alpha for the regressor; default `.001`
-* `l1-ratio`: (float) l1 ratio to be used for the regressor; default `.5`
-* `label-col`: (str, required) name of label column in dataset; `string` input
-* `feat-cols`: (str) names of columns in dataset to be used as features; input is one `string` with names delimited by commas
-    * This argument is optional. If no argument is provided, it is assumed that all columns but the label column are feature columns.
-
-This app currently assumes that the input data is all numerical.
-
-To run the app with default parameters while in the root directory, run the command 
+Then, train a GBT model on the data, saving the fitted network as an MLflow model. See the [gbt-regression docs](examples/gbt-regression/README.md) for more info on available parameters.
 ```
-mlflow run . -e linear-regression-main -P training-data-path="insert/data/path/" -P test-data-path="insert/data/path/" -P label-col="insert.label.col"
+mlflow run git@github.com:databricks/mlflow-apps.git#examples/gbt-regression/ -P training-data-path="$temp/train_diamonds.parquet" -P test-data-path="$temp/test_diamonds.parquet" -P label-col="price"
 ```
+The output will contain a line with the run ID, e.g:
+```
+Run with ID <run id> finished
+```
+
+We can now use the fitted model to make predictions on our test data via the MLflow CLI and the run id produced by the previous command:
+```
+mlflow pyfunc predict -m model -r <run id> -i "$temp/diamonds.csv"
+```
+The output of this command will be 20 numbers, which are predictions of 20 diamonds' prices based on their features (located in `temp-data/diamonds.csv`). You can compare these numbers to the actual prices of the diamonds, which are located in `temp-data/actual_diamonds.csv`.
+
+### Calling an App in Your Code
+
+Calling an app from your code is simple  - just use MLflow's [Python API](https://mlflow.org/docs/latest/projects.html#building-multi-step-workflows):
+```
+# Train an XGBoost GBT, exporting it as an MLflow model
+train_data_path = "..."
+test_data_path = "..."
+label_col = "..."
+# Running the MLflow project
+submitted_run = mlflow.projects.run(uri="git@github.com:databricks/mlflow-apps.git#examples/gbt-regression/", parameters={"training-data-path":train_data_path, "test-data-path":test_data_path, "label-col":label_col})
+# Load the model again for inference or more training
+model = mlflow.sklearn.load_model("model", submitted_run.run_id)
+```
+
+## Apps
+
+The library contains the following apps:
 
 ### dnn-regression
 
-This sample project creates and fits a Tensorflow [DNNRegressor](https://www.tensorflow.org/api_docs/python/tf/estimator/DNNRegressor) model based on parquet-formatted input data. Then, the application exports the model to a local file and logs the model using MLflow's APIs. The arguments to the program are as follows:
-* `model-dir`: (str, required) local path or URI of a directory to which the DNNRegressor's checkpoints and the final exported SavedModel will be written.
-* `training-data-path`: (str, required) local path or URI of a parquet file containing training data
-* `test-data-path`: (str, required) local path or URI of a parquet file containing test data
-* `hidden-units`: (str, required) size and number of layers for the dnn; `string` input which has layers delimited by commas (i.e. "10,10" for two layers of 10 nodes each)
-* `steps`: (int) steps to be run while training the regressor; default `100`
-* `batch-size`: (int) batch size used for creation of input functions for training and evaluation; default `128`
-* `label-col`: (str, required) name of label column in dataset
-* `feat-cols`: (str) names of columns in dataset to be used as features; input is one `string` with names delimited by commas
-    * This argument is optional. If no argument is provided, it is assumed that all columns but the label column are feature columns.
+This app creates and fits a Tensorflow [DNNRegressor](https://www.tensorflow.org/api_docs/python/tf/estimator/DNNRegressor) model based on parquet-formatted input data. Then, the application exports the model to a local file and logs the model using MLflow's APIs. See more info [here](examples/dnn-regression/).
 
-This app currently assumes that the input data is all numerical. Column names must adhere to TensorFlow [constraints](https://www.tensorflow.org/api_docs/python/tf/Operation#__init__).
+### gbt-regression
+This app creates and fits an [XGBoost Gradient Boosted Tree](https://xgboost.readthedocs.io/en/latest/python/python_api.html#module-xgboost.sklearn) model based on parquet-formatted input data. See more info [here](examples/gbt-regression/).
 
-To run the app with default parameters while in the root directory, run the command 
-```
-mlflow run . -e dnn-regression-main -P model-dir="insert/model/save/path" -P training-data-path="insert/data/path/" -P test-data-path="insert/data/path/" -P hidden-units="10,10" -P label-col="insert.label.col"
-```
+### linear-regression
 
-### Downloading an Example Dataset
+This app creates and fits an [Elastic Net](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html) model based on parquet-formatted input data. See more info [here](examples/linear-regression/).
 
-You can download example training & test parquet files containing the [diamonds](https://raw.githubusercontent.com/tidyverse/ggplot2/4c678917/data-raw/diamonds.csv) dataset by running the command 
-```
-mlflow run  . -e download-example-data -P dest_dir="path/to/dir"
-```
-You can then use these files as data for running the example applications.
+## Contributing
 
-### Specifying Additional Parameters
-
-To pass additional parameters to a `mlflow run` command, add `-P name-of-argument=value.of.argument` to the command. An example of adding custom parameters to the `gbt-regression` example app is as follows: 
-```
-mlflow run . -e gbt-regression-main -P data-path="insert/data/path/" -P label-col="insert.label.col" -P feat-cols="insert,feat,cols" -P n-trees=500
-```
-
-### Running MLflow from a Different Directory
-
-To run an app from a different directory other than the root, replace the "." with the path to the folder containing the MLProject file. For example, the command to run the `linear-regression` app from `mlflow-examples`'s parent directory is
-```
-mlflow run mlflow-examples -e linear-regression-main -P training-data-path="insert/data/path/" -P test-data-path="insert/data/path/" -P label-col="insert.label.col" 
-```
-
-### Running MLflow from a Git Repository
-
-To run a MLflow project from a GitHub repository, replace the path to MlProject file folder with the SSH clone URI. For example, if you wanted to run the `dnn-regression` example application from a Git repository, run the command
-```
-mlflow run git@github.com:databricks/mlflow-examples.git -e dnn-regression-main -P model-dir="insert/model/save/path" -P training-data-path="insert/data/path/" -P test-data-path="insert/data/path/" -P hidden-units="10,10" -P label-col="insert.label.col"
-```
+If you would like to contribute to this library, please see the [contribution guide](CONTRIBUTING.md) for details.

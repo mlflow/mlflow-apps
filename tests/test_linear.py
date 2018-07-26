@@ -25,8 +25,8 @@ def test_linear():
             initial = os.path.join(root_tracking_dir, "0")
             dir_list = os.listdir(initial)
 
-            # Run the main dnn app via mlflow
-            run(".", entry_point="linear-regression-main", version=None, 
+            # Run the main linear app via mlflow
+            run("examples/linear-regression", entry_point="main", version=None, 
             parameters={"training-data-path": os.path.join(diamonds, "train_diamonds.parquet"),
                         "test-data-path": os.path.join(diamonds, "test_diamonds.parquet"), 
                         "alpha": .001,

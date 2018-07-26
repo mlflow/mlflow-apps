@@ -1,5 +1,6 @@
 from sklearn.linear_model import ElasticNet
-from mlflow import log_metric, sklearn
+import mlflow
+from mlflow import sklearn
 
 
 def train(training_pandas_data, test_pandas_data, label_col, 
@@ -23,7 +24,7 @@ def train(training_pandas_data, test_pandas_data, label_col,
     #We will use a linear Elastic Net model.
     en = ElasticNet(alpha=alpha, l1_ratio=l1_ratio)
 
-    # Here we train the model and keep track of how long it takes.
+    # Here we train the model.
     en.fit(trainingFeatures, trainingLabels)
 
     # Calculating the score of the model.
@@ -34,8 +35,11 @@ def train(training_pandas_data, test_pandas_data, label_col,
     print("Test set score:", r2_score_test)
 
     #Logging the r2 score for both sets.
-    log_metric("R2 score for training set", r2_score_training)
-    log_metric("R2 score for test set", r2_score_test)
+    mlflow.log_metric("R2 score for training set", r2_score_training)
+    mlflow.log_metric("R2 score for test set", r2_score_test)
 
     #Saving the model as an artifact.
     sklearn.log_model(en, "model")
+
+    run_id = mlflow.tracking.active_run().info.run_uuid
+    print("Run with id %s finished" % run_id)
