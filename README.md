@@ -15,7 +15,7 @@ temp="$(mktemp -d)"
 mlflow run git@github.com:databricks/mlflow-apps.git -e download-example-data -P dest-dir=$temp
 ```
 
-Then, train a GBT model and save it as an MLflow model. See the [GBT App docs](examples/gbt-regression/README.md).
+Then, train a GBT model and save it as an MLflow model (see the [GBT App docs](examples/gbt-regression/README.md) for more information):
 ```
 mlflow run git@github.com:databricks/mlflow-apps.git#examples/gbt-regression/ -P training-data-path="$temp/train_diamonds.parquet" -P test-data-path="$temp/test_diamonds.parquet" -P label-col="price"
 ```
