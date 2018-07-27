@@ -18,6 +18,7 @@ matrix:
       python: 3.6
 script:
   - pip install mlflow
+  - pip install pytest
   - pytest
   - ./lint.sh
 sudo: true
