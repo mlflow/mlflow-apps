@@ -27,6 +27,8 @@ install:
   # Useful for debugging any issues with conda
   - conda info -a
   - pip install mlflow
+  - pip install pandas
+  - pip install numpy
   script:
   - pytest
   - ./lint.sh
