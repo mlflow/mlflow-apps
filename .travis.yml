@@ -19,6 +19,7 @@ matrix:
 script:
   - pip install mlflow
   - pip install pytest
+  - pip install tensorflow
   - pytest
   - ./lint.sh
 sudo: true
