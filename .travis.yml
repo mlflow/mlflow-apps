@@ -18,8 +18,6 @@ matrix:
       python: 3.6
 script:
   - pip install mlflow
-  - pip install numpy
-  - pip install pandas
   - pytest
   - ./lint.sh
 sudo: true
