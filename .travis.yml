@@ -9,9 +9,6 @@ install:
   - "conda config --set always_yes yes --set changeps1 no"
   - "pip install -r dev-requirements.txt"
   - "conda info -a"
-  - "pip install mlflow"
-  - "pip install numpy"
-  - "pip install pandas"
 language: python
 matrix: 
   include: 
@@ -19,7 +16,10 @@ matrix:
       python: 2.7
     - 
       python: 3.6
-script: 
+script:
+  - pip install mlflow
+  - pip install numpy
+  - pip install pandas
   - pytest
   - ./lint.sh
 sudo: true
