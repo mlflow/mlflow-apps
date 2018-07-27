@@ -4,9 +4,7 @@ language: python
 matrix:
   include:
     - python: 2.7
-      env: TOXENV=py27
     - python: 3.6
-      env: TOXENV=py36
 install:
   - sudo mkdir -p /travis-install
   - sudo chown travis /travis-install
