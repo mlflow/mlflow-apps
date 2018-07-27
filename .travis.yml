@@ -20,6 +20,11 @@ script:
   - pip install mlflow
   - pip install pytest
   - pip install tensorflow
+  - pip install pyarrow
+  - pip install xgboost
+  - pip install scikit-learn
+  - pip install pandas
+  - pip install numpy
   - pytest
   - ./lint.sh
 sudo: true
