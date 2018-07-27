@@ -1,3 +1,17 @@
+# Copyright 2018 Databricks, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import os
 import re
 import sys
@@ -38,11 +52,12 @@ def download_diamonds(temp_folder_path):
     # Saving a CSV file of the dataset for predicting purposes.
     csv_predict = pd_df.drop(["price"], 1)
     # The number of data points we want to predict on when calling mlflow pyfunc predict.
-    num_predict = 20
-    csv_predict[:num_predict].to_csv(os.path.join(temp_folder_path, "diamonds.csv"), index=False)
+    num_pred = 20
+    csv_predict[:num_pred].to_csv(os.path.join(temp_folder_path, "diamonds.csv"), index=False)
     # This CSV file contains the price of the tested diamonds.
     # Predictions can be compared with these actual values.
-    pd_df["price"][:num_predict].to_csv(os.path.join(temp_folder_path, "diamond_prices.csv"), index=False)
+    pd_df["price"][:num_pred].to_csv(os.path.join(temp_folder_path, "diamond_prices.csv"),
+                                   index=False)
 
     return pd_df
 
