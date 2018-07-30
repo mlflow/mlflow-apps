@@ -1,10 +1,10 @@
 prospector[with_pyroma]==0.12.7
 pylint==1.8.2
-mlflow
-tensorflow
+xgboost
 pytest
 pyarrow
 pandas
 numpy
-xgboost
 scikit-learn
+mlflow
+tensorflow
