@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
-print(sys.path)
-print(sys.executable)
 import os
 import numpy
 import pandas

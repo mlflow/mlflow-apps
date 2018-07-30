@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import xgboost as xgb
 import mlflow
 from mlflow import sklearn
+import xgboost as xgb
 
 
 def train(training_pandasData, test_pandasData, label_col, feat_cols, n_trees, m_depth, 
