@@ -19,6 +19,8 @@ matrix:
     - 
       python: 3.6
 script: 
-  - pytest
+  - pytest tests/test_dnn.py
+  - pytest tests/test_gbt.py
+  - pytest tests/test_linear.py
   - ./lint.sh
 sudo: true
