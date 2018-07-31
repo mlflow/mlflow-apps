@@ -68,4 +68,4 @@ This app creates and fits an [Elastic Net](http://scikit-learn.org/stable/module
 
 ## Contributing
 
-If you would like to contribute to this library, please see the [contribution guide](CONTRIBUTING.md) for details.
+If you would like to contribute to this library, please see the [contribution guide](CONTRIBUTING.rst) for details.
