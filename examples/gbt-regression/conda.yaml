@@ -4,10 +4,6 @@ channels:
 dependencies:
   - numpy
   - pandas=0.22.0
-  # We are fixing python because of differing protocols in pickling causing errors.
-  # The cause of this is envs with 2.7 creating other envs with 3.6 instead of 2.7.
-  # TODO: fix this, remove fixing of python version. Applicable to sklearn apps.
-  - python=2.7
   - scikit-learn==0.19.1
   - pip:
     - mlflow
