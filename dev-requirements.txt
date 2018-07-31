@@ -5,6 +5,7 @@ pytest
 pyarrow
 pandas
 numpy
+rstcheck
 scikit-learn
 mlflow
 tensorflow

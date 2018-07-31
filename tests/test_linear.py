@@ -31,24 +31,24 @@ def test_linear():
             os.mkdir(root_tracking_dir)
             tracking.set_tracking_uri(root_tracking_dir)
             # Download the diamonds dataset via mlflow run
-            run(".", entry_point="download-example-data", version=None, 
-            parameters={"dest-dir":diamonds}, experiment_id=0, 
-            mode="local", cluster_spec=None, git_username=None, git_password=None, use_conda=True,
-            use_temp_cwd=False, storage_dir=None)
+            run(".", entry_point="download-example-data", version=None,
+                parameters={"dest-dir": diamonds}, experiment_id=0,
+                mode="local", cluster_spec=None, git_username=None, git_password=None,
+                use_conda=True, use_temp_cwd=False, storage_dir=None)
 
             initial = os.path.join(root_tracking_dir, "0")
             dir_list = os.listdir(initial)
 
             # Run the main linear app via mlflow
-            run("examples/linear-regression", entry_point="main", version=None, 
-            parameters={"training-data-path": os.path.join(diamonds, "train_diamonds.parquet"),
-                        "test-data-path": os.path.join(diamonds, "test_diamonds.parquet"), 
-                        "alpha": .001,
-                        "l1-ratio": .5,
-                        "label-col":"price"}, 
-            experiment_id=0, mode="local", 
-            cluster_spec=None, git_username=None, git_password=None, use_conda=True,
-            use_temp_cwd=False, storage_dir=None)
+            run("examples/linear-regression", entry_point="main", version=None,
+                parameters={"training-data-path": os.path.join(diamonds, "train_diamonds.parquet"),
+                            "test-data-path": os.path.join(diamonds, "test_diamonds.parquet"),
+                            "alpha": .001,
+                            "l1-ratio": .5,
+                            "label-col": "price"},
+                experiment_id=0, mode="local",
+                cluster_spec=None, git_username=None, git_password=None, use_conda=True,
+                use_temp_cwd=False, storage_dir=None)
 
             # Identifying the new run's folder
             main = None
