@@ -5,6 +5,7 @@ set -e
 FWDIR="$(cd "`dirname $0`"; pwd)"
 cd "$FWDIR"
 
-prospector --profile "$FWDIR/prospector.yaml" -i "example"
+pycodestyle --max-line-length=100 tests
+pylint --msg-template="{path} ({line},{column}): [{msg_id} {symbol}] {msg}" --rcfile="$FWDIR/pylintrc" -- examples tests
 
 rstcheck README.rst

@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import tensorflow as tf
 import mlflow
 from mlflow import tensorflow
-import tensorflow as tf
 
 
 def train(model_dir, training_pandas_data, test_pandas_data, label_col, feat_cols, hidden_units, 
