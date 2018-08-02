@@ -20,8 +20,8 @@ from mlflow import tensorflow
 def train(model_dir, training_pandas_data, test_pandas_data, label_col, feat_cols, hidden_units, 
           steps, batch_size, training_data_path, test_data_path):
 
-    print("training-data-path:    " + training_data_path)
-    print("test-data-path:        " + test_data_path)
+    print("train:                 " + training_data_path)
+    print("test:                  " + test_data_path)
     for hu in hidden_units:
         print("hidden-units:         ", hu)
     print("steps:                ", steps)

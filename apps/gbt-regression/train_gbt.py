@@ -20,8 +20,8 @@ from mlflow import sklearn
 def train(training_pandasData, test_pandasData, label_col, feat_cols, n_trees, m_depth, 
           learning_rate, loss, training_data_path, test_data_path):
 
-    print("training-data-path:    " + training_data_path)
-    print("test-data-path:        " + test_data_path)
+    print("train:                 " + training_data_path)
+    print("test:                  " + test_data_path)
     print("n_trees:              ", n_trees)
     print("m-depth:              ", m_depth)
     print("learning-rate:        ", learning_rate)
