@@ -34,7 +34,7 @@ def test_gbt():
             run(".", entry_point="main", version=None,
                 parameters={"dest-dir": diamonds}, experiment_id=0,
                 mode="local", cluster_spec=None, git_username=None, git_password=None,
-                use_conda=True, use_temp_cwd=False, storage_dir=None)
+                use_conda=True, storage_dir=None)
 
             initial = os.path.join(artifacts, "0")
             dir_list = os.listdir(initial)

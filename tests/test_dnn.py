@@ -35,7 +35,7 @@ def test_dnn():
             run(".", entry_point="main", version=None,
                 parameters={"dest-dir": diamonds}, experiment_id=tracking._get_experiment_id(),
                 mode="local", cluster_spec=None, git_username=None, git_password=None,
-                use_conda=True, use_temp_cwd=False, storage_dir=None)
+                use_conda=True, storage_dir=None)
 
             # Run the main dnn app via mlflow
             run("apps/dnn-regression", entry_point="main", version=None,
