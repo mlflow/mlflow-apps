@@ -31,18 +31,18 @@ def test_gbt():
             os.mkdir(artifacts)
             tracking.set_tracking_uri(artifacts)
             # Download the diamonds dataset via mlflow run
-            run(".", entry_point="download-example-data", version=None,
+            run(".", entry_point="main", version=None,
                 parameters={"dest-dir": diamonds}, experiment_id=0,
                 mode="local", cluster_spec=None, git_username=None, git_password=None,
-                use_conda=True, use_temp_cwd=False, storage_dir=None)
+                use_conda=True, storage_dir=None)
 
             initial = os.path.join(artifacts, "0")
             dir_list = os.listdir(initial)
 
             # Run the main gbt app via mlflow
-            run("examples/gbt-regression", entry_point="main", version=None,
-                parameters={"training-data-path": os.path.join(diamonds, "train_diamonds.parquet"),
-                            "test-data-path": os.path.join(diamonds, "test_diamonds.parquet"),
+            run("apps/gbt-regression", entry_point="main", version=None,
+                parameters={"train": os.path.join(diamonds, "train_diamonds.parquet"),
+                            "test": os.path.join(diamonds, "test_diamonds.parquet"),
                             "n-trees": 10,
                             "m-depth": 3,
                             "learning-rate": .1,
@@ -50,7 +50,7 @@ def test_gbt():
                             "label-col": "price"},
                 experiment_id=0, mode="local",
                 cluster_spec=None, git_username=None, git_password=None, use_conda=True,
-                use_temp_cwd=False, storage_dir=None)
+                storage_dir=None)
 
             # Identifying the new run's folder
             main = None

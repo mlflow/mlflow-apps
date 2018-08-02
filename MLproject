@@ -1,7 +1,7 @@
 conda_env: conda.yaml
 
 entry_points:
-  download-example-data:
+  main:
     parameters:
       dest-dir: path
     command: "python utils.py {dest-dir}"
