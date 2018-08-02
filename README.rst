@@ -7,7 +7,7 @@ apps in this repository to:
 - Seamlessly embed ML functionality into your own applications
 - Reproducibly train models from a variety of frameworks on big & small data, without worrying about installing dependencies
 
-We recommend calling the apps in this library from a Python 3 environment. The apps run in Python 3 conda environments, so it may not be possible to load the models produced by the apps back into Python 2 environments.
+We recommend calling the apps in this library from a Python 3 environment - the apps run in Python 3 conda environments, so it may not be possible to load the models produced by the apps back into Python 2 environments.
 
 Getting Started
 ---------------
