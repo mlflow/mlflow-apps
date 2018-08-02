@@ -22,14 +22,14 @@ First, download example training & test parquet files containing the
 ::
 
    temp="$(mktemp -d)"
-   mlflow run git@github.com:mlflow/mlflow-apps.git -e download-example-data -P dest-dir=$temp
+   mlflow run git@github.com:databricks/mlflow-apps.git -P dest-dir=$temp
 
 Then, train a GBT model and save it as an MLflow model (see the `GBT App
 docs`_ for more information):
 
 ::
 
-   mlflow run git@github.com:mlflow/mlflow-apps.git#examples/gbt-regression/ -P training-data-path="$temp/train_diamonds.parquet" -P test-data-path="$temp/test_diamonds.parquet" -P label-col="price"
+   mlflow run git@github.com:databricks/mlflow-apps.git#apps/gbt-regression/ -P training-data-path="$temp/train_diamonds.parquet" -P test-data-path="$temp/test_diamonds.parquet" -P label-col="price"
 
 The output will contain a line with the run ID, e.g:
 
@@ -69,7 +69,7 @@ API`_:
    test_data_path = "..."
    label_col = "..."
    # Running the MLflow project
-   submitted_run = mlflow.projects.run(uri="git@github.com:mlflow/mlflow-apps.git#examples/gbt-regression/", parameters={"training-data-path":train_data_path, "test-data-path":test_data_path, "label-col":label_col})
+   submitted_run = mlflow.projects.run(uri="git@github.com:databricks/mlflow-apps.git#apps/gbt-regression/", parameters={"training-data-path":train_data_path, "test-data-path":test_data_path, "label-col":label_col})
    # Load the model again for inference or more training
    model = mlflow.sklearn.load_model("model", submitted_run.run_id)
 
@@ -90,12 +90,29 @@ gbt-regression
 ~~~~~~~~~~~~~~
 
 This app creates and fits an `XGBoost Gradient Boosted Tree`_ model
-based on parquet-formatted input data. See
+based on parquet-formatted input data. See more info
+`here <apps/gbt-regression/>`__.
+
+linear-regression
+~~~~~~~~~~~~~~~~~
+
+This app creates and fits an `Elastic Net`_ model based on
+parquet-formatted input data. See more info
+`here <apps/linear-regression/>`__.
+
+Contributing
+------------
+
+If you would like to contribute to this library, please see the
+`contribution guide`_ for details.
+
 
 .. _MLflow: http://mlflow.org
 .. _diamonds: https://raw.githubusercontent.com/tidyverse/ggplot2/4c678917/data-raw/diamonds.csv
-.. _GBT App docs: examples/gbt-regression/README.md
+.. _GBT App docs: apps/gbt-regression/README.md
 .. _Python API: https://mlflow.org/docs/latest/projects.html#building-multi-step-workflows
 .. _DNNRegressor: https://www.tensorflow.org/api_docs/python/tf/estimator/DNNRegressor
-.. _here: examples/dnn-regression/
 .. _XGBoost Gradient Boosted Tree: https://xgboost.readthedocs.io/en/latest/python/python_api.html#module-xgboost.sklearn
+.. _here: apps/dnn-regression/
+.. _Elastic Net: http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html
+.. _contribution guide: CONTRIBUTING.rst

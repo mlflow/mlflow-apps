@@ -20,8 +20,8 @@ from mlflow import sklearn
 def train(training_pandas_data, test_pandas_data, label_col, 
           feat_cols, alpha, l1_ratio, training_data_path, test_data_path):
 
-    print("training-data-path:    " + training_data_path)
-    print("test-data-path:        " + test_data_path)
+    print("train:         " + training_data_path)
+    print("test:          " + test_data_path)
     print("alpha:        ", alpha)
     print("l1-ratio:     ", l1_ratio)
     print("label-col:     " + label_col)
