@@ -7,6 +7,8 @@ your own applications \* Reproducibly train models from a variety of
 frameworks on big & small data, without worrying about installing
 dependencies
 
+This repository requires use of Python 3.
+
 Getting Started
 ---------------
 
