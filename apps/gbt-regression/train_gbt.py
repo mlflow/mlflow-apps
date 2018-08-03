@@ -52,8 +52,8 @@ def train(training_pandasData, test_pandasData, label_col, feat_cols, n_trees, m
     print("Test set score:", r2_score_test)
 
     # Logging the r2 score for both sets.
-    mlflow.log_metric("R2 score for training set", r2_score_training)
-    mlflow.log_metric("R2 score for test set", r2_score_test)
+    mlflow.log_metric("R2_train", r2_score_training)
+    mlflow.log_metric("R2_test", r2_score_test)
 
     # Saving the model as an artifact.
     sklearn.log_model(xgbr, "model")
