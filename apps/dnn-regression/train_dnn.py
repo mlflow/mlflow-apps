@@ -71,7 +71,7 @@ def train(model_dir, training_pandas_data, test_pandas_data, label_col, feat_col
 
     print("Test RMSE:", test_rmse)
 
-    mlflow.log_param("num_data", len(training_pandas_data[label_col].values))
+    mlflow.log_param("num_train_points", len(training_pandas_data[label_col].values))
 
     #Logging the RMSE and predictions.
     mlflow.log_metric("RMSE", test_rmse)
