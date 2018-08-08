@@ -24,14 +24,14 @@ First, download example training & test parquet files containing the
 ::
 
    temp="$(mktemp -d)"
-   mlflow run git@github.com:mlflow/mlflow-apps.git -P dest-dir=$temp
+   mlflow run https://github.com/mlflow/mlflow-apps.git -P dest-dir=$temp
 
 Then, train a GBT model and save it as an MLflow model (see the `GBT App
 docs`_ for more information):
 
 ::
 
-   mlflow run git@github.com:mlflow/mlflow-apps.git#apps/gbt-regression/ -P training-data-path="$temp/train_diamonds.parquet" -P test-data-path="$temp/test_diamonds.parquet" -P label-col="price"
+   mlflow run https://github.com/mlflow/mlflow-apps.git#apps/gbt-regression/ -P training-data-path="$temp/train_diamonds.parquet" -P test-data-path="$temp/test_diamonds.parquet" -P label-col="price"
 
 The output will contain a line with the run ID, e.g:
 
@@ -71,7 +71,7 @@ API`_:
    test_data_path = "..."
    label_col = "..."
    # Running the MLflow project
-   submitted_run = mlflow.projects.run(uri="git@github.com:mlflow/mlflow-apps.git#apps/gbt-regression/", parameters={"training-data-path":train_data_path, "test-data-path":test_data_path, "label-col":label_col})
+   submitted_run = mlflow.projects.run(uri="https://github.com/mlflow/mlflow-apps.git#apps/gbt-regression/", parameters={"training-data-path":train_data_path, "test-data-path":test_data_path, "label-col":label_col})
    # Load the model again for inference or more training
    model = mlflow.sklearn.load_model("model", submitted_run.run_id)
 
