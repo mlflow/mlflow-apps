@@ -50,7 +50,7 @@ The output of this command will be 20 numbers, which are predictions of
 20 diamonds’ prices based on their features (located in
 ``$temp/diamonds.csv``). You can compare these numbers to the actual
 prices of the diamonds, which are located in
-``$temp/actual_diamonds.csv``.
+``$temp/diamond_prices.csv``.
 
 Finally, clean up the generated files via:
 
