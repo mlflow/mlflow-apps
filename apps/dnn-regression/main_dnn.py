@@ -17,7 +17,7 @@ import pandas
 import train_dnn
 import utils
 
-# Trains a single-machine Tensorflow DNNRegressor model on the provided data file, 
+# Trains a single-machine TensorFlow DNNRegressor model on the provided data file, 
 # producing a pickled model file. Uses MLflow tracking APIs to log the input parameters, 
 # the model file, and the model's training loss. It is assumed that the columns input are numeric.
 

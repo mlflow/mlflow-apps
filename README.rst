@@ -49,8 +49,11 @@ in the run ID from the previous step):
 The output of this command will be 20 numbers, which are predictions of
 20 diamonds’ prices based on their features (located in
 ``$temp/diamonds.csv``). You can compare these numbers to the actual
-prices of the diamonds, which are located in
-``$temp/diamond_prices.csv``.
+prices of the diamonds, which are viewable via
+
+::
+
+   cat $temp/diamond_prices.csv
 
 Finally, clean up the generated files via:
 
@@ -83,7 +86,7 @@ The library contains the following apps:
 dnn-regression
 ~~~~~~~~~~~~~~
 
-This app creates and fits a Tensorflow `DNNRegressor`_ model based on
+This app creates and fits a TensorFlow `DNNRegressor`_ model based on
 parquet-formatted input data. Then, the application exports the model to
 a local file and logs the model using MLflow’s APIs. See more info
 `here`_.

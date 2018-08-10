@@ -1,7 +1,7 @@
 dnn-regression
 ==============
 
-This sample project creates and fits a Tensorflow `DNNRegressor`_ model based on parquet-formatted input data. Then, the application exports the model to a local file and logs the model using MLflow’s APIs. The arguments to the program are as follows: 
+This sample project creates and fits a TensorFlow `DNNRegressor`_ model based on parquet-formatted input data. Then, the application exports the model to a local file and logs the model using MLflow’s APIs. The arguments to the program are as follows: 
 
 - ``model-dir``: (str, required) local path or URI of a directory to which the DNNRegressor’s checkpoints and the final exported SavedModel will be written. 
 - ``train``: (str, required) local path or URI of a parquet filecontaining training data 
@@ -18,7 +18,7 @@ To run the app with default parameters while in the root directory, run the comm
 
 ::
 
-   mlflow apps/dnn-regression/ -e main -P model-dir="insert/model/save/path" -P train="insert/data/path/" -P test="insert/data/path/" -P hidden-units="10,10" -P label-col="insert.label.col"
+   mlflow run apps/dnn-regression/ -e main -P model-dir="insert/model/save/path" -P train="insert/data/path/" -P test="insert/data/path/" -P hidden-units="10,10" -P label-col="insert.label.col"
 
 .. _DNNRegressor: https://www.tensorflow.org/api_docs/python/tf/estimator/DNNRegressor
 .. _constraints: https://www.tensorflow.org/api_docs/python/tf/Operation#__init__
