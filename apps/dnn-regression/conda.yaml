@@ -2,8 +2,9 @@ name: main
 channels:
   - defaults
 dependencies:
-  - pandas=0.22.0
+  - pandas==0.22.0
   - python==3.6
+  - scikit-learn==0.19.1
   - pip:
     - mlflow
     - pyarrow

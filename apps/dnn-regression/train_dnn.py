@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from sklearn.metrics import r2_score
 import tensorflow as tf
 import mlflow
 from mlflow import tensorflow
@@ -67,14 +68,28 @@ def train(model_dir, training_pandas_data, test_pandas_data, label_col, feat_col
     # Evaluating model on training data
     test_eval = regressor.evaluate(input_fn=input_test)
 
+    # Calculating the RMSE of the testing set.
     test_rmse = test_eval["average_loss"]**0.5
 
+    # Putting the predictions in a list we can use to calculate r^2 scores with.
+    train_raw_pred = list(regressor.predict(input_fn=input_train))
+    train_pred = [i['predictions'][0] for i in train_raw_pred]
+    r2_train = r2_score(training_labels, train_pred)
+
+    test_raw_pred = list(regressor.predict(input_fn=input_test))
+    test_pred = [i['predictions'][0] for i in test_raw_pred]
+    r2_test = r2_score(test_labels, test_pred)
+
     print("Test RMSE:", test_rmse)
+    print("Training Set R2", r2_train)
+    print("Test Set R2", r2_test)
 
     mlflow.log_param("num_train_points", len(training_pandas_data[label_col].values))
 
-    #Logging the RMSE and predictions.
-    mlflow.log_metric("RMSE", test_rmse)
+    #Logging the RMSE and r2 scores.
+    mlflow.log_metric("Test RMSE", test_rmse)
+    mlflow.log_metric("Train R2", r2_train)
+    mlflow.log_metric("Test R2", r2_test)
 
     # Saving TensorFlow model.
     saved_estimator_path = regressor.export_savedmodel(model_dir, 
