@@ -58,5 +58,5 @@ def train(training_pandas_data, test_pandas_data, label_col,
     #Saving the model as an artifact.
     sklearn.log_model(en, "model")
 
-    run_id = mlflow.tracking.active_run().info.run_uuid
+    run_id = mlflow.active_run().info.run_uuid
     print("Run with id %s finished" % run_id)

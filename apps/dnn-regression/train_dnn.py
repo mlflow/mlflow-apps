@@ -58,7 +58,8 @@ def train(model_dir, training_pandas_data, test_pandas_data, label_col, feat_col
     # Creating DNNRegressor
     regressor = tf.estimator.DNNRegressor(
         feature_columns=tf_feat_cols,
-        hidden_units=hidden_units)
+        hidden_units=hidden_units,
+        model_dir=model_dir)
 
     # Training regressor on training input function
     regressor.train(
@@ -96,9 +97,11 @@ def train(model_dir, training_pandas_data, test_pandas_data, label_col, feat_col
                                                        receiver_fn).decode("utf-8")
 
     # Logging the TensorFlow model just saved.
-    tensorflow.log_saved_model(saved_model_dir=saved_estimator_path,
-                               signature_def_key="predict", 
-                               artifact_path="model")
+    tensorflow.log_model(
+        tf_saved_model_dir=saved_estimator_path,
+        tf_meta_graph_tags=[tf.saved_model.tag_constants.SERVING],
+        tf_signature_def_key="predict",
+        artifact_path="model")
 
-    run_id = mlflow.tracking.active_run().info.run_uuid
+    run_id = mlflow.active_run().info.run_uuid
     print("Run with id %s finished" % run_id)

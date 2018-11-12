@@ -15,10 +15,12 @@
 import os
 import numpy
 import pandas
+import mlflow
+
 from mlflow.utils.file_utils import TempDir
 from mlflow.projects import run
 from mlflow import tracking
-from mlflow.sklearn import load_pyfunc
+from mlflow.pyfunc import load_pyfunc
 
 
 def test_gbt():
@@ -30,17 +32,16 @@ def test_gbt():
             os.mkdir(diamonds)
             os.mkdir(artifacts)
             tracking.set_tracking_uri(artifacts)
+            mlflow.set_experiment("test-experiment")
             # Download the diamonds dataset via mlflow run
             run(".", entry_point="main", version=None,
-                parameters={"dest-dir": diamonds}, experiment_id=0,
+                parameters={"dest-dir": diamonds},
                 mode="local", cluster_spec=None, git_username=None, git_password=None,
                 use_conda=True, storage_dir=None)
 
-            initial = os.path.join(artifacts, "0")
-            dir_list = os.listdir(initial)
-
             # Run the main gbt app via mlflow
-            run("apps/gbt-regression", entry_point="main", version=None,
+            submitted_run = run(
+                "apps/gbt-regression", entry_point="main", version=None,
                 parameters={"train": os.path.join(diamonds, "train_diamonds.parquet"),
                             "test": os.path.join(diamonds, "test_diamonds.parquet"),
                             "n-trees": 10,
@@ -48,17 +49,11 @@ def test_gbt():
                             "learning-rate": .1,
                             "loss": "rmse",
                             "label-col": "price"},
-                experiment_id=0, mode="local",
+                mode="local",
                 cluster_spec=None, git_username=None, git_password=None, use_conda=True,
                 storage_dir=None)
 
-            # Identifying the new run's folder
-            main = None
-            for item in os.listdir(initial):
-                if item not in dir_list:
-                    main = item
-
-            pyfunc = load_pyfunc(os.path.join(initial, main, "artifacts/model/model.pkl"))
+            pyfunc = load_pyfunc("model", run_id=submitted_run.run_id)
             df = pandas.read_parquet(os.path.join(diamonds, "test_diamonds.parquet"))
 
             # Removing the price column from the DataFrame so we can use the features to predict
