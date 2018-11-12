@@ -19,6 +19,7 @@ import mlflow
 from mlflow.utils.file_utils import TempDir
 from mlflow.projects import run
 from mlflow import tracking
+from mlflow.pyfunc import load_pyfunc
 
 
 def test_dnn():
@@ -54,12 +55,11 @@ def test_dnn():
                 storage_dir=None)
 
             # Loading the saved model as a pyfunc.
-            pyfunc = mlflow.pyfunc.load_pyfunc("model", submitted_run.run_id)
+            pyfunc = load_pyfunc("model", submitted_run.run_id)
 
             df = pandas.read_parquet(os.path.join(diamonds, "test_diamonds.parquet"))
 
             predict_df = pyfunc.predict(df)
-            assert 'predictions' in predict_df
-            assert isinstance(predict_df['predictions'][0][0], numpy.float32)
+            assert isinstance(predict_df['predictions'][0], numpy.float32)
     finally:
         tracking.set_tracking_uri(old_uri)
