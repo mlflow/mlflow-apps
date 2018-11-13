@@ -15,9 +15,11 @@
 import os
 import numpy
 import pandas
+import mlflow
 from mlflow.utils.file_utils import TempDir
 from mlflow.projects import run
-from mlflow import tracking, tensorflow
+from mlflow import tracking
+from mlflow.pyfunc import load_pyfunc
 
 
 def test_dnn():
@@ -31,14 +33,16 @@ def test_dnn():
             os.mkdir(estimator)
             os.mkdir(artifacts)
             tracking.set_tracking_uri(artifacts)
+            mlflow.set_experiment("test-experiment")
             # Download the diamonds dataset via mlflow run
             run(".", entry_point="main", version=None,
-                parameters={"dest-dir": diamonds}, experiment_id=tracking._get_experiment_id(),
+                parameters={"dest-dir": diamonds},
                 mode="local", cluster_spec=None, git_username=None, git_password=None,
                 use_conda=True, storage_dir=None)
 
             # Run the main dnn app via mlflow
-            run("apps/dnn-regression", entry_point="main", version=None,
+            submitted_run = run(
+                "apps/dnn-regression", entry_point="main", version=None,
                 parameters={"model-dir": estimator,
                             "train": os.path.join(diamonds, "train_diamonds.parquet"),
                             "test": os.path.join(diamonds, "test_diamonds.parquet"),
@@ -46,17 +50,16 @@ def test_dnn():
                             "label-col": "price",
                             "steps": 5000,
                             "batch-size": 128},
-                experiment_id=tracking._get_experiment_id(), mode="local",
+                mode="local",
                 cluster_spec=None, git_username=None, git_password=None, use_conda=True,
                 storage_dir=None)
 
             # Loading the saved model as a pyfunc.
-            pyfunc = tensorflow.load_pyfunc(os.path.join(estimator, os.listdir(estimator)[0]))
+            pyfunc = load_pyfunc("model", submitted_run.run_id)
 
             df = pandas.read_parquet(os.path.join(diamonds, "test_diamonds.parquet"))
 
             predict_df = pyfunc.predict(df)
-            assert 'predictions' in predict_df
-            assert isinstance(predict_df['predictions'][0][0], numpy.float32)
+            assert isinstance(predict_df['predictions'][0], numpy.float32)
     finally:
         tracking.set_tracking_uri(old_uri)

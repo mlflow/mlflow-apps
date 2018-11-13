@@ -63,5 +63,5 @@ def train(training_pandasData, test_pandasData, label_col, feat_cols, n_trees, m
     # Saving the model as an artifact.
     sklearn.log_model(xgbr, "model")
 
-    run_id = mlflow.tracking.active_run().info.run_uuid
+    run_id = mlflow.active_run().info.run_uuid
     print("Run with id %s finished" % run_id)
