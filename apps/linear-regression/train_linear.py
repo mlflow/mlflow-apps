@@ -60,3 +60,5 @@ def train(training_pandas_data, test_pandas_data, label_col,
 
     run_id = mlflow.active_run().info.run_uuid
     print("Run with id %s finished" % run_id)
+if__name__=='__main__': #You forgot to call the function
+ train()
